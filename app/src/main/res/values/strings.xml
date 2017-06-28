@@ -6,4 +6,14 @@
     <string name="cont_desc_background_1">Background Image - White House</string>
     <string name="cont_desc_background_2">Background Image - Full moon</string>
     <string name="cont_desc_background_3">Background Image - Desert landscape</string>
+
+    <string name="action_about">About</string>
+    <string name="action_rate">Rate</string>
+    <string name="by_author">by Michael Fotiadis</string>
+    <string name="text_about_the_app">This app is meant to be satirical, so enjoy and don\'t forget to rate if you like it!</string>
+    <string name="label_ok">OK</string>
+    <string name="dialog_title">Rate the app</string>
+    <string name="dialog_message">You convfefe this? Give us stars.</string>
+    <string name="dialog_ok">Covfefe!</string>
+    <string name="label_cancel">Cancel</string>
 </resources>

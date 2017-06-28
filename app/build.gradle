@@ -21,9 +21,9 @@ final def LONG = "long"
 final def INT = "int"
 
 final int versionMajor = 1
-final int versionMinor = 1
+final int versionMinor = 0
 final int versionPatch = 0
-final int androidVersionCode = 3
+final int androidVersionCode = 1
 final String semanticVersion = "${versionMajor}.${versionMinor}.${versionPatch}"
 
 final String appCompatLibVersion = "25.3.1"
