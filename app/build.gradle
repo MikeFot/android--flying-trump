@@ -1,0 +1,102 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
+apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+
+
+final def STRING = "String"
+final def BOOLEAN = "boolean"
+final def LONG = "long"
+final def INT = "int"
+
+final int versionMajor = 1
+final int versionMinor = 1
+final int versionPatch = 0
+final int androidVersionCode = 3
+final String semanticVersion = "${versionMajor}.${versionMinor}.${versionPatch}"
+
+final String appCompatLibVersion = "25.3.1"
+
+android {
+
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+    defaultConfig {
+        applicationId "com.michaelfotiadis.flyingtrump"
+        minSdkVersion 15
+        targetSdkVersion 25
+        versionCode androidVersionCode
+        versionName semanticVersion
+
+        vectorDrawables.useSupportLibrary = true
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+
+        release {
+            storeFile file(RELEASE_STORE_FILE)
+            storePassword RELEASE_STORE_PASSWORD
+            keyAlias RELEASE_KEY_ALIAS
+            keyPassword RELEASE_KEY_PASSWORD
+        }
+    }
+
+    buildTypes {
+
+        release {
+            minifyEnabled true
+            shrinkResources true
+
+            signingConfig signingConfigs.release
+
+            debuggable false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            signingConfig signingConfigs.release
+
+        }
+
+        debug {
+
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-debug"
+
+            logger.info('Version code: ' + androidVersionCode)
+            minifyEnabled false
+
+            debuggable true
+
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    compile "com.android.support:design:$appCompatLibVersion"
+    compile "com.android.support:appcompat-v7:$appCompatLibVersion"
+    compile "com.android.support:support-vector-drawable:$appCompatLibVersion"
+
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+
+    testCompile 'junit:junit:4.12'
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
+        transitive = true;
+    }
+}

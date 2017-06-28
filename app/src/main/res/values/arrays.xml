@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="quotes">
+        <item>Make it great again!</item>
+        <item>Build a wall!</item>
+        <item>Convfefe!</item>
+        <item>We need global warming!</item>
+        <item>You can never be too greedy!</item>
+        <item>Fake news!</item>
+    </string-array>
+
+</resources>
