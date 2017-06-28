@@ -9,9 +9,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.ViewFlipper;
 
 import com.crashlytics.android.Crashlytics;
+import com.michaelfotiadis.flyingtrump.audio.AudioPlayer;
 import com.michaelfotiadis.flyingtrump.view.animation.AnimatorCallback;
 import com.michaelfotiadis.flyingtrump.view.animation.TrumpAnimator;
 
@@ -23,11 +24,11 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String NAVIGATION_EXTRA = "SELECTED_VIEW_EXTRA";
 
-    private ViewGroup mContentView;
-    private ImageView mImageView;
+    private ViewFlipper mViewFlipper;
     private Button mButton;
     private BottomNavigationView mNavigationView;
     private TrumpAnimator mTrumpAnimator;
+    private AudioPlayer mAudioPlayer;
     private final AtomicBoolean isAnimating = new AtomicBoolean(false);
 
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -36,14 +37,17 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull final MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    setTitle("The White House!");
-                    mImageView.setImageResource(R.drawable.bg_white_house);
+                case R.id.navigation_house:
+                    setTitle("To the White House!");
+                    mViewFlipper.setDisplayedChild(0);
                     return true;
-                case R.id.navigation_dashboard:
-                    setTitle("The Moon!");
+                case R.id.navigation_moon:
+                    setTitle("To the moon!");
+                    mViewFlipper.setDisplayedChild(1);
                     return true;
-                case R.id.navigation_notifications:
+                case R.id.navigation_desert:
+                    setTitle("To the desert!");
+                    mViewFlipper.setDisplayedChild(2);
                     return true;
             }
             return false;
@@ -60,13 +64,17 @@ public class MainActivity extends AppCompatActivity {
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mContentView = (ViewGroup) findViewById(R.id.trump_view);
-        mImageView = (ImageView) findViewById(R.id.image);
+        mAudioPlayer = new AudioPlayer(this);
+
+        mViewFlipper = (ViewFlipper) findViewById(R.id.flipper);
+        mViewFlipper.setInAnimation(this, R.anim.slide_in_right_chrome);
+        mViewFlipper.setOutAnimation(this, R.anim.slide_out_left_chrome);
         mButton = (Button) findViewById(R.id.button);
 
         mButton.setText(getRandomText());
 
-        mTrumpAnimator = new TrumpAnimator(getResources(), mContentView, new AnimatorCallback() {
+        final ViewGroup contentView = (ViewGroup) findViewById(R.id.trump_view);
+        mTrumpAnimator = new TrumpAnimator(getResources(), contentView, new AnimatorCallback() {
             @Override
             public void onStarted() {
                 isAnimating.set(true);
@@ -75,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFinished() {
                 isAnimating.set(false);
-
             }
         });
 
@@ -85,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
                 mButton.setText(getRandomText());
                 if (!isAnimating.get()) {
                     mTrumpAnimator.animate();
+                    playRandomSound();
                 }
             }
         });
@@ -92,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         mNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
         mNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        final int selectedId = savedInstanceState == null ? R.id.navigation_home : savedInstanceState.getInt(NAVIGATION_EXTRA, R.id.navigation_home);
+        final int selectedId = savedInstanceState == null ? R.id.navigation_house : savedInstanceState.getInt(NAVIGATION_EXTRA, R.id.navigation_house);
         mNavigationView.setSelectedItemId(selectedId);
 
 
@@ -106,6 +114,54 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void playRandomSound() {
+
+        final int r = (int) (Math.random() * 10 + 1);
+        final int resId;
+        switch (r) {
+            case 1:
+                resId = R.raw.trump_1;
+                break;
+            case 2:
+                resId = R.raw.trump_2;
+                break;
+            case 3:
+                resId = R.raw.trump_3;
+                break;
+            case 4:
+                resId = R.raw.trump_4;
+                break;
+            case 5:
+                resId = R.raw.trump_5;
+                break;
+            case 6:
+                resId = R.raw.trump_6;
+                break;
+            case 7:
+                resId = R.raw.trump_7;
+                break;
+            case 8:
+                resId = R.raw.trump_8;
+                break;
+            case 9:
+                resId = R.raw.trump_9;
+                break;
+            case 10:
+                resId = R.raw.trump_10;
+                break;
+            default:
+                resId = R.raw.trump_1;
+        }
+        mAudioPlayer.play(resId);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mAudioPlayer != null) {
+            mAudioPlayer.stop();
+        }
+    }
 
     private String getRandomText() {
 

@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">Flying Trump</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
-    <string name="cont_desc_background">Background Image</string>
+    <string name="title_1">Home</string>
+    <string name="title_2">Space</string>
+    <string name="title_3">Desert</string>
+    <string name="cont_desc_background_1">Background Image - White House</string>
+    <string name="cont_desc_background_2">Background Image - Full moon</string>
+    <string name="cont_desc_background_3">Background Image - Desert landscape</string>
 </resources>

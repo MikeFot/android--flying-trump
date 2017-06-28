@@ -43,19 +43,42 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/navigation"
-            android:layout_below="@id/app_bar_layout"
-            >
+            android:layout_below="@id/app_bar_layout">
 
-
-            <ImageView
-                android:id="@+id/image"
+            <ViewFlipper
+                android:id="@+id/flipper"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:alpha="0.9"
-                android:contentDescription="@string/cont_desc_background"
-                android:scaleType="centerCrop"
-                tools:src="@drawable/bg_white_house">
-            </ImageView>
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:alpha="0.9"
+                    android:contentDescription="@string/cont_desc_background_1"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/bg_white_house">
+                </ImageView>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:alpha="0.9"
+                    android:contentDescription="@string/cont_desc_background_2"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/bg_moon">
+                </ImageView>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:alpha="0.9"
+                    android:contentDescription="@string/cont_desc_background_3"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/bg_desert">
+                </ImageView>
+
+            </ViewFlipper>
+
 
             <Button
                 android:id="@+id/button"
