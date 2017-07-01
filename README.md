@@ -1,4 +1,4 @@
-# android--flying-trump
+# Flying Trump head and soundboard!
 Android Trump meme with animations and sounds!
 
 This is a simple application I did on a slow day.
